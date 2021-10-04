@@ -1,0 +1,2 @@
+# prime
+just prime program
