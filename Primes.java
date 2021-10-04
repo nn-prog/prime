@@ -76,3 +76,5 @@ public class Primes {
         Files.write(Paths.get(property + "/primes_diff.csv"), lines, StandardCharsets.UTF_8);
     }
 }
+
+
