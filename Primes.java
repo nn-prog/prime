@@ -4,7 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeSet;
+import java.util.TreeMap;
 
 public class Primes {
 
@@ -47,13 +47,13 @@ public class Primes {
         String property = System.getProperty("user.home");
         System.out.println(property);
         List<String> lines = new ArrayList<>();
-        TreeSet<Integer> diffs = new TreeSet<>();
-        lines.add("Previous Prime, Prime, Diff, Ratio");
+        TreeMap<Integer,List<String>> diffs = new TreeMap<>();
+        lines.add("Previous Prime, Prime, Diff, half diff");
         for (int i = 0; i < 10000; i++) {
             if (prime != null) {
                 int diff = prime - prevPrime;
-                diffs.add(diff);
-                String line = prevPrime + ", " + prime + ", " + diff+", "+(prime/(double)prevPrime);
+                diffs.computeIfAbsent(diff, ArrayList::new).add(prime+"-"+prevPrime);
+                String line = prevPrime + ", " + prime + ", " + diff+", "+(diff/2);
                 lines.add(line);
                 prevPrime = prime;
                 prime = primes.next();
@@ -64,7 +64,7 @@ public class Primes {
         }
         System.out.println("max diff " + maxDiff);
         System.out.println("Unique diffs " + (diffs.size()-1));
-        for (Integer diff : diffs) {
+        for (Integer diff : diffs.keySet()) {
             while(diff/2>0){
                 System.out.print(" "+diff);
                 diff = diff/2;
